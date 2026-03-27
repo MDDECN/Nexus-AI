@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="OIvgzp_QKd0d3xJcsX3grlRAuBjDDVz2oQJOUyKPocc" />
     <title>Nexus AI - Multimodal Creative Studio</title>
+    
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2103/2103633.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2103/2103633.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -269,57 +273,58 @@
             <a href="#" class="menu-item"><span>📱</span> Social Media</a>
         </nav>
 
-        <button class="btn-clear" id="clearGalleryBtn">Clear Gallery History</button>
+        <button class="btn-clear" id="clearBtn">Clear Gallery</button>
     </aside>
 
     <main class="main-content">
         <header>
             <h1>What shall we create today?</h1>
-            <p class="subtitle">Multimodal artificial intelligence at your service.</p>
+            <p class="subtitle">Next-gen AI tools for your creative workflow.</p>
         </header>
 
         <div class="prompt-box">
-            <textarea id="promptInput" placeholder="Describe your project... e.g. A futuristic landscape with neon lights and flying cars."></textarea>
+            <textarea id="promptInput" placeholder="Describe your masterpiece... e.g. A cyberpunk samurai under neon rain, cinematic lighting."></textarea>
             <div class="prompt-footer">
                 <div class="options-group">
                     <select id="modelSelect">
-                        <option value="flux">Model: Flux</option>
-                        <option value="turbo">Model: Turbo</option>
+                        <option value="flux">Model: Flux (HQ)</option>
+                        <option value="turbo">Model: Turbo (Fast)</option>
                     </select>
                     <select>
-                        <option>Ratio: 16:9</option>
                         <option>Ratio: 1:1</option>
-                        <option>Ratio: 9:16</option>
+                        <option>Ratio: 16:9</option>
                     </select>
                 </div>
-                <button class="btn-magic" id="generateBtn">Generate Now</button>
+                <button class="btn-magic" id="generateBtn">Generate Magic</button>
             </div>
         </div>
 
-        <h2 class="section-title">Your recent creations</h2>
-        <div class="gallery" id="galleryGrid">
-            </div>
+        <h2 class="section-title">Your Studio History</h2>
+        <div class="gallery" id="galleryGrid"></div>
     </main>
 
     <script>
-        const API_KEY = "pk_DZbxS6nR4gStxE3v";
+        const POLLINATIONS_KEY = "pk_DZbxS6nR4gStxE3v";
         const generateBtn = document.getElementById('generateBtn');
-        const clearGalleryBtn = document.getElementById('clearGalleryBtn');
+        const clearBtn = document.getElementById('clearBtn');
         const promptInput = document.getElementById('promptInput');
         const galleryGrid = document.getElementById('galleryGrid');
         const modelSelect = document.getElementById('modelSelect');
 
-        function generateCard(prompt, model) {
-            const seed = Math.floor(Math.random() * 100000);
+        generateBtn.addEventListener('click', () => {
+            const prompt = promptInput.value.trim();
+            if (!prompt) return alert('Please enter a description!');
+
+            const seed = Math.floor(Math.random() * 999999);
+            const model = modelSelect.value;
             const imageUrl = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=1024&height=1024&seed=${seed}&model=${model}&nologo=true`;
 
             const card = document.createElement('div');
             card.className = 'card';
-            
             card.innerHTML = `
-                <div class="card-image">Generating...</div>
+                <div class="card-image">Rendering...</div>
                 <div class="card-content">
-                    <span class="tag">Image • ${model.toUpperCase()}</span>
+                    <span class="tag">Pollinations • ${model.toUpperCase()}</span>
                     <p class="card-desc">${prompt}</p>
                 </div>
             `;
@@ -329,32 +334,19 @@
             const img = new Image();
             img.src = imageUrl;
             img.onload = () => {
-                const imgContainer = card.querySelector('.card-image');
-                imgContainer.innerHTML = '';
-                imgContainer.appendChild(img);
+                const container = card.querySelector('.card-image');
+                container.innerHTML = '';
+                container.appendChild(img);
             };
-        }
-
-        generateBtn.addEventListener('click', () => {
-            const prompt = promptInput.value.trim();
-            if (!prompt) return alert('Please write a prompt first!');
-
-            const model = modelSelect.value;
-            generateCard(prompt, model);
         });
 
-        clearGalleryBtn.addEventListener('click', () => {
-            if (galleryGrid.children.length === 0) {
-                alert('Gallery is already empty.');
-                return;
-            }
-
-            const confirmClear = confirm('Are you sure you want to clear all history?');
-            if (confirmClear) {
-                galleryGrid.innerHTML = '';
+        clearBtn.addEventListener('click', () => {
+            if (galleryGrid.children.length > 0) {
+                if (confirm('Clear all generated images?')) {
+                    galleryGrid.innerHTML = '';
+                }
             }
         });
     </script>
 </body>
 </html>
-
