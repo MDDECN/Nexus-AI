@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="OIvgzp_QKd0d3xJcsX3grlRAuBjDDVz2oQJOUyKPocc" />
-    <title>Nexus AI, Multimodal Creative Studio</title>
+    <title>Nexus AI | Multimodal Creative Studio</title>
     
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2103/2103633.png" type="image/png">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2103/2103633.png">
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
         * {
             box-sizing: border-box;
@@ -27,9 +26,9 @@
         }
 
         .sidebar {
-            width: 280px;
+            width: 260px;
             background-color: #151518;
-            padding: 2rem 1.5rem;
+            padding: 2rem 1.2rem;
             display: flex;
             flex-direction: column;
             border-right: 1px solid #2a2a2e;
@@ -67,6 +66,11 @@
             border-radius: 8px;
             margin-bottom: 0.4rem;
             transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            width: 100%;
+            font-size: 0.9rem;
         }
 
         .menu-item:hover, .menu-item.active {
@@ -74,49 +78,42 @@
             color: #ffffff;
         }
 
-        .menu-item span {
+        .menu-item .icon {
             margin-right: 12px;
-            font-size: 1.2rem;
         }
 
         .btn-clear {
             margin-top: auto;
             background-color: transparent;
-            border: 1px solid #ec4899;
-            color: #ec4899;
-            padding: 10px 15px;
+            border: 1px solid #3f3f46;
+            color: #a1a1aa;
+            padding: 10px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.8rem;
-            font-weight: 600;
             transition: all 0.2s;
         }
 
         .btn-clear:hover {
-            background-color: #ec4899;
-            color: white;
+            border-color: #ef4444;
+            color: #ef4444;
         }
 
         .main-content {
             flex: 1;
-            padding: 2.5rem 4rem;
+            padding: 2.5rem;
             overflow-y: auto;
-            background: radial-gradient(circle at top right, #1e1b4b 0%, #0d0d0f 40%);
+            background: radial-gradient(circle at top right, #1e1b4b 0%, #0d0d0f 45%);
         }
 
-        header {
-            margin-bottom: 2.5rem;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
+        header h1 {
+            font-size: 2rem;
             margin-bottom: 0.5rem;
         }
 
         .subtitle {
             color: #71717a;
-            font-size: 1rem;
+            margin-bottom: 2rem;
         }
 
         .prompt-box {
@@ -124,20 +121,18 @@
             border: 1px solid #27272a;
             border-radius: 16px;
             padding: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
 
         textarea {
             width: 100%;
-            height: 80px;
+            height: 60px;
             background: transparent;
             border: none;
             color: #f4f4f5;
-            font-size: 1.1rem;
+            font-size: 1rem;
             resize: none;
             outline: none;
-            margin-bottom: 1rem;
         }
 
         .prompt-footer {
@@ -146,21 +141,20 @@
             align-items: center;
             border-top: 1px solid #27272a;
             padding-top: 1rem;
+            margin-top: 1rem;
         }
 
-        .options-group {
+        .controls {
             display: flex;
-            gap: 12px;
+            gap: 10px;
         }
 
         select {
             background-color: #27272a;
-            color: #e4e4e7;
+            color: white;
             border: 1px solid #3f3f46;
-            padding: 6px 12px;
+            padding: 8px 12px;
             border-radius: 6px;
-            font-size: 0.85rem;
-            outline: none;
             cursor: pointer;
         }
 
@@ -168,26 +162,15 @@
             background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
             color: white;
             border: none;
-            padding: 10px 24px;
+            padding: 10px 20px;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        .btn-magic:hover {
-            opacity: 0.9;
-        }
-
-        .section-title {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            color: #e4e4e7;
         }
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
 
@@ -196,26 +179,24 @@
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid #27272a;
-            transition: transform 0.3s ease;
+            animation: fadeIn 0.4s ease-out;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: #9333ea;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .card-image {
-            height: 180px;
-            background: linear-gradient(45deg, #27272a, #3f3f46);
+        .card-media {
+            aspect-ratio: 1/1;
+            background: #111;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #71717a;
-            font-size: 0.8rem;
-            overflow: hidden;
+            position: relative;
         }
 
-        .card-image img {
+        .card-media img, .card-media video {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -226,31 +207,36 @@
         }
 
         .tag {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 800;
             color: #a855f7;
             text-transform: uppercase;
-            margin-bottom: 4px;
-            display: block;
+            letter-spacing: 1px;
         }
 
         .card-desc {
             font-size: 0.85rem;
             color: #a1a1aa;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            margin-top: 4px;
         }
 
-        ::-webkit-scrollbar {
-            width: 8px;
+        .loader {
+            width: 30px;
+            height: 30px;
+            border: 3px solid #3f3f46;
+            border-top-color: #a855f7;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
-        ::-webkit-scrollbar-track {
-            background: #0d0d0f;
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
-        ::-webkit-scrollbar-thumb {
-            background: #27272a;
-            border-radius: 10px;
+
+        audio {
+            width: 100%;
+            height: 40px;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -260,92 +246,131 @@
         <div class="logo">NEXUS AI</div>
         
         <nav class="menu-section">
-            <span class="menu-label">Tools</span>
-            <a href="#" class="menu-item active"><span>✨</span> Magic Studio</a>
-            <a href="#" class="menu-item"><span>🖼️</span> Image Gen</a>
-            <a href="#" class="menu-item"><span>🎬</span> Video Gen</a>
-            <a href="#" class="menu-item"><span>🎤</span> Voice Clone</a>
+            <span class="menu-label">Create</span>
+            <button class="menu-item active" onclick="setMode('image')">
+                <span class="icon">🖼️</span> Image Studio
+            </button>
+            <button class="menu-item" onclick="setMode('video')">
+                <span class="icon">🎬</span> Video Motion
+            </button>
+            <button class="menu-item" onclick="setMode('audio')">
+                <span class="icon">🎤</span> Voice & Audio
+            </button>
         </nav>
 
-        <nav class="menu-section">
-            <span class="menu-label">Marketing</span>
-            <a href="#" class="menu-item"><span>📈</span> Ad Creator</a>
-            <a href="#" class="menu-item"><span>📱</span> Social Media</a>
-        </nav>
-
-        <button class="btn-clear" id="clearBtn">Clear Gallery</button>
+        <button class="btn-clear" id="clearBtn">Reset Canvas</button>
     </aside>
 
     <main class="main-content">
         <header>
-            <h1>What shall we create today?</h1>
-            <p class="subtitle">Next-gen AI tools for your creative workflow.</p>
+            <h1 id="mainTitle">AI Image Studio</h1>
+            <p class="subtitle">Turn your imagination into digital reality.</p>
         </header>
 
         <div class="prompt-box">
-            <textarea id="promptInput" placeholder="Describe your masterpiece... e.g. A cyberpunk samurai under neon rain, cinematic lighting."></textarea>
+            <textarea id="promptInput" placeholder="Describe what you want to create..."></textarea>
             <div class="prompt-footer">
-                <div class="options-group">
-                    <select id="modelSelect">
-                        <option value="flux">Model: Flux (HQ)</option>
-                        <option value="turbo">Model: Turbo (Fast)</option>
-                    </select>
-                    <select>
-                        <option>Ratio: 1:1</option>
-                        <option>Ratio: 16:9</option>
+                <div class="controls">
+                    <select id="aspectRatio">
+                        <option value="1024/1024">Square (1:1)</option>
+                        <option value="1280/720">Wide (16:9)</option>
+                        <option value="720/1280">Portrait (9:16)</option>
                     </select>
                 </div>
-                <button class="btn-magic" id="generateBtn">Generate Magic</button>
+                <button class="btn-magic" id="generateBtn">Generate</button>
             </div>
         </div>
 
-        <h2 class="section-title">Your Studio History</h2>
         <div class="gallery" id="galleryGrid"></div>
     </main>
 
     <script>
-        const POLLINATIONS_KEY = "pk_DZbxS6nR4gStxE3v";
-        const generateBtn = document.getElementById('generateBtn');
-        const clearBtn = document.getElementById('clearBtn');
-        const promptInput = document.getElementById('promptInput');
+        let currentMode = 'image';
         const galleryGrid = document.getElementById('galleryGrid');
-        const modelSelect = document.getElementById('modelSelect');
+        const promptInput = document.getElementById('promptInput');
+        const generateBtn = document.getElementById('generateBtn');
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.menu-item').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            const titles = {
+                image: "AI Image Studio",
+                video: "AI Video Motion",
+                audio: "AI Voice & Audio"
+            };
+            document.getElementById('mainTitle').innerText = titles[mode];
+            promptInput.placeholder = `Describe your ${mode}...`;
+        }
 
         generateBtn.addEventListener('click', () => {
             const prompt = promptInput.value.trim();
-            if (!prompt) return alert('Please enter a description!');
+            if (!prompt) return alert('Enter a prompt first!');
 
-            const seed = Math.floor(Math.random() * 999999);
-            const model = modelSelect.value;
-            const imageUrl = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=1024&height=1024&seed=${seed}&model=${model}&nologo=true`;
+            const id = Date.now();
+            const ratio = document.getElementById('aspectRatio').value.split('/');
+            const width = ratio[0];
+            const height = ratio[1];
 
             const card = document.createElement('div');
             card.className = 'card';
+            card.id = `card-${id}`;
             card.innerHTML = `
-                <div class="card-image">Rendering...</div>
+                <div class="card-media"><div class="loader"></div></div>
                 <div class="card-content">
-                    <span class="tag">Pollinations • ${model.toUpperCase()}</span>
+                    <span class="tag">${currentMode} generation</span>
                     <p class="card-desc">${prompt}</p>
                 </div>
             `;
-
             galleryGrid.prepend(card);
 
-            const img = new Image();
-            img.src = imageUrl;
-            img.onload = () => {
-                const container = card.querySelector('.card-image');
-                container.innerHTML = '';
-                container.appendChild(img);
-            };
+            if (currentMode === 'image') {
+                generateImage(prompt, width, height, id);
+            } else if (currentMode === 'video') {
+                generateVideo(prompt, id);
+            } else {
+                generateAudio(prompt, id);
+            }
         });
 
-        clearBtn.addEventListener('click', () => {
-            if (galleryGrid.children.length > 0) {
-                if (confirm('Clear all generated images?')) {
-                    galleryGrid.innerHTML = '';
-                }
-            }
+        function generateImage(prompt, w, h, id) {
+            const seed = Math.floor(Math.random() * 100000);
+            const url = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=${w}&height=${h}&seed=${seed}&nologo=true`;
+            
+            const img = new Image();
+            img.src = url;
+            img.onload = () => {
+                document.querySelector(`#card-${id} .card-media`).innerHTML = `<img src="${url}" alt="AI Gen">`;
+            };
+        }
+
+        function generateVideo(prompt, id) {
+            const url = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=480&height=480&model=turbo&feed=true`;
+            setTimeout(() => {
+                document.querySelector(`#card-${id} .card-media`).innerHTML = `
+                    <img src="${url}" style="border-radius: 4px;" alt="AI Video Preview">
+                    <div style="position:absolute; bottom:10px; right:10px; background:rgba(0,0,0,0.6); padding:2px 6px; border-radius:4px; font-size:10px;">GIF PREVIEW</div>
+                `;
+            }, 2000);
+        }
+
+        function generateAudio(prompt, id) {
+            const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(prompt)}&tl=en&client=tw-ob`;
+            
+            setTimeout(() => {
+                const mediaContainer = document.querySelector(`#card-${id} .card-media`);
+                mediaContainer.innerHTML = `
+                    <div style="text-align:center">
+                        <span style="font-size:40px">🔊</span>
+                        <audio controls src="${url}"></audio>
+                    </div>
+                `;
+            }, 1000);
+        }
+
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            if(confirm('Clear your studio history?')) galleryGrid.innerHTML = '';
         });
     </script>
 </body>
