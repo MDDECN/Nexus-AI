@@ -6,18 +6,18 @@
     <title>Nexus AI | Multimodal Creative Studio</title>
     
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2103/2103633.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-dark: #09090b;
-            --sidebar-bg: #111113;
-            --accent-primary: #a855f7;
+            --bg-dark: #050507;
+            --sidebar-bg: rgba(15, 15, 18, 0.8);
+            --accent-primary: #8b5cf6;
             --accent-secondary: #ec4899;
             --text-main: #f4f4f5;
             --text-muted: #a1a1aa;
-            --border-color: #27272a;
-            --card-bg: #18181b;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(24, 24, 27, 0.7);
         }
 
         * {
@@ -33,295 +33,249 @@
             display: flex;
             height: 100vh;
             overflow: hidden;
+            position: relative;
+        }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .sidebar {
             width: 280px;
             background-color: var(--sidebar-bg);
+            backdrop-filter: blur(20px);
             padding: 2rem 1.5rem;
             display: flex;
             flex-direction: column;
             border-right: 1px solid var(--border-color);
+            z-index: 10;
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 800;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            background: linear-gradient(90deg, #fff, var(--accent-primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 3rem;
             letter-spacing: -1px;
+            text-align: center;
         }
 
-        .menu-section {
-            margin-bottom: 2rem;
-        }
+        .menu-section { margin-bottom: 2rem; }
 
         .menu-label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: #52525b;
             text-transform: uppercase;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 1rem;
             display: block;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
         .menu-item {
             display: flex;
             align-items: center;
-            padding: 0.75rem 1rem;
+            padding: 0.85rem 1rem;
             color: var(--text-muted);
             text-decoration: none;
-            border-radius: 10px;
+            border-radius: 12px;
             margin-bottom: 0.5rem;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             border: 1px solid transparent;
             background: transparent;
             width: 100%;
-            font-size: 0.95rem;
-            font-weight: 500;
+            font-size: 0.9rem;
         }
 
         .menu-item:hover {
-            background-color: #1e1e22;
-            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            transform: translateX(5px);
         }
 
         .menu-item.active {
-            background-color: #27272a;
-            color: #ffffff;
-            border-color: var(--border-color);
-        }
-
-        .menu-item .icon {
-            margin-right: 12px;
-            font-size: 1.1rem;
-        }
-
-        .btn-clear {
-            margin-top: auto;
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-        }
-
-        .btn-clear:hover {
-            background: #450a0a;
-            border-color: #ef4444;
-            color: #fecaca;
+            background: linear-gradient(90deg, rgba(139, 92, 246, 0.2), transparent);
+            color: #fff;
+            border-left: 3px solid var(--accent-primary);
         }
 
         .main-content {
             flex: 1;
             padding: 3rem;
             overflow-y: auto;
-            background: radial-gradient(circle at 70% 0%, #1e1b4b 0%, #09090b 50%);
+            z-index: 1;
+            position: relative;
+            background: radial-gradient(circle at 50% -20%, rgba(139, 92, 246, 0.15), transparent 50%);
         }
 
         header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 3rem;
+            font-weight: 800;
             margin-bottom: 0.5rem;
-            letter-spacing: -0.5px;
+            letter-spacing: -1.5px;
         }
 
         .subtitle {
             color: var(--text-muted);
-            margin-bottom: 2.5rem;
-            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            font-weight: 300;
         }
 
         .prompt-box {
-            background: rgba(24, 24, 27, 0.6);
+            background: var(--card-bg);
             backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 1.5rem;
             margin-bottom: 3rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
         textarea {
             width: 100%;
-            height: 80px;
+            height: 60px;
             background: transparent;
             border: none;
-            color: var(--text-main);
-            font-size: 1.1rem;
+            color: #fff;
+            font-size: 1.2rem;
             resize: none;
             outline: none;
-            line-height: 1.5;
         }
 
         .prompt-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
             border-top: 1px solid var(--border-color);
-            padding-top: 1.2rem;
-            margin-top: 1rem;
-        }
-
-        .controls {
-            display: flex;
-            gap: 12px;
-        }
-
-        select {
-            background-color: #27272a;
-            color: white;
-            border: 1px solid var(--border-color);
-            padding: 10px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            outline: none;
         }
 
         .btn-magic {
-            background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
-            color: white;
+            background: #fff;
+            color: #000;
             border: none;
-            padding: 12px 28px;
-            border-radius: 10px;
-            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 100px;
+            font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+            transition: all 0.3s;
         }
 
         .btn-magic:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
         }
 
         .card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
+            background: var(--card-bg);
+            border-radius: 20px;
             overflow: hidden;
             border: 1px solid var(--border-color);
-            transition: transform 0.3s ease;
+            transition: 0.4s;
+            animation: fadeIn 0.5s ease-out;
         }
 
-        .card:hover {
-            transform: scale(1.02);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+
+        .card:hover { border-color: var(--accent-primary); }
 
         .card-media {
-            aspect-ratio: 16/10;
-            background: #111;
+            aspect-ratio: 1;
+            background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            border-bottom: 1px solid var(--border-color);
         }
 
-        .card-media img, .card-media video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .card-media img { width: 100%; height: 100%; object-fit: cover; }
 
-        .card-content {
-            padding: 1.2rem;
-        }
+        .card-content { padding: 1.5rem; }
 
         .tag {
-            font-size: 0.65rem;
-            font-weight: 800;
             color: var(--accent-primary);
+            font-size: 0.7rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1.2px;
-            display: block;
             margin-bottom: 8px;
-        }
-
-        .card-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.4;
+            display: block;
         }
 
         .loader {
-            width: 35px;
-            height: 35px;
-            border: 3px solid #27272a;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255,255,255,0.1);
             border-top-color: var(--accent-primary);
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 1s infinite linear;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        audio {
-            width: 100%;
-            height: 36px;
-            margin-top: 10px;
-            filter: invert(100%) hue-rotate(180deg) brightness(1.5);
-        }
-
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
-            .main-content { padding: 1.5rem; }
+        select {
+            background: transparent;
+            color: #fff;
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: 8px;
+            outline: none;
         }
     </style>
 </head>
 <body>
 
+    <canvas id="particles-canvas"></canvas>
+
     <aside class="sidebar">
-        <div class="logo">NEXUS AI</div>
+        <div class="logo">NEXUS.STUDIO</div>
         
         <nav class="menu-section">
-            <span class="menu-label">Creative Engine</span>
+            <span class="menu-label">Creative Suite</span>
             <button class="menu-item active" onclick="setMode('image', this)">
-                <span class="icon">🖼️</span> Image Studio
+                <span style="margin-right:12px">🖼️</span> Image Synthesis
             </button>
             <button class="menu-item" onclick="setMode('video', this)">
-                <span class="icon">🎬</span> Video Motion
+                <span style="margin-right:12px">🎬</span> Motion Gen
             </button>
             <button class="menu-item" onclick="setMode('audio', this)">
-                <span class="icon">🎤</span> Voice & Audio
+                <span style="margin-right:12px">🎤</span> Neural Voice
             </button>
         </nav>
-
-        <button class="btn-clear" id="clearBtn">Clear Session</button>
     </aside>
 
     <main class="main-content">
         <header>
-            <h1 id="mainTitle">AI Image Studio</h1>
-            <p class="subtitle">Transform text into high-fidelity visual assets.</p>
+            <h1 id="mainTitle">Image Synthesis</h1>
+            <p class="subtitle">Next-generation creative engine powered by Pollinations AI.</p>
         </header>
 
         <div class="prompt-box">
-            <textarea id="promptInput" placeholder="Describe your vision in detail..."></textarea>
+            <textarea id="promptInput" placeholder="Describe your vision..."></textarea>
             <div class="prompt-footer">
-                <div class="controls">
-                    <select id="aspectRatio">
-                        <option value="1024/1024">Square (1:1)</option>
-                        <option value="1280/720">Cinema (16:9)</option>
-                        <option value="720/1280">Mobile (9:16)</option>
-                    </select>
-                </div>
-                <button class="btn-magic" id="generateBtn">Generate Result</button>
+                <select id="aspectRatio">
+                    <option value="1024/1024">1:1 Square</option>
+                    <option value="1280/720">16:9 Cinema</option>
+                    <option value="720/1280">9:16 Portrait</option>
+                </select>
+                <button class="btn-magic" id="generateBtn">GENERATE</button>
             </div>
         </div>
 
@@ -329,6 +283,74 @@
     </main>
 
     <script>
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null };
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(139, 92, 246, 0.3)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 80; i++) particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+                particles.forEach(p2 => {
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if(dist < 100) {
+                        ctx.strokeStyle = `rgba(139, 92, 246, ${0.1 - dist/1000})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+            requestAnimationFrame(animate);
+        }
+
+        resizeCanvas();
+        animate();
+
         let currentMode = 'image';
         const galleryGrid = document.getElementById('galleryGrid');
         const promptInput = document.getElementById('promptInput');
@@ -338,16 +360,7 @@
             currentMode = mode;
             document.querySelectorAll('.menu-item').forEach(btn => btn.classList.remove('active'));
             element.classList.add('active');
-            
-            const config = {
-                image: { title: "AI Image Studio", sub: "Transform text into high-fidelity visual assets." },
-                video: { title: "AI Video Motion", sub: "Generate cinematic motion from descriptive prompts." },
-                audio: { title: "AI Voice & Audio", sub: "Convert written text into natural neural speech." }
-            };
-
-            document.getElementById('mainTitle').innerText = config[mode].title;
-            document.querySelector('.subtitle').innerText = config[mode].sub;
-            promptInput.placeholder = `Describe your ${mode} content...`;
+            document.getElementById('mainTitle').innerText = mode.charAt(0).toUpperCase() + mode.slice(1) + " Synthesis";
         }
 
         generateBtn.addEventListener('click', () => {
@@ -355,71 +368,36 @@
             if (!prompt) return;
 
             const id = Date.now();
-            const [width, height] = document.getElementById('aspectRatio').value.split('/');
-
+            const [w, h] = document.getElementById('aspectRatio').value.split('/');
+            
             const card = document.createElement('div');
             card.className = 'card';
             card.id = `card-${id}`;
             card.innerHTML = `
                 <div class="card-media"><div class="loader"></div></div>
                 <div class="card-content">
-                    <span class="tag">${currentMode} Synthesis</span>
-                    <p class="card-desc">${prompt}</p>
+                    <span class="tag">${currentMode} synthesis</span>
+                    <p style="font-size:0.9rem; opacity:0.8">${prompt}</p>
                 </div>
             `;
             galleryGrid.prepend(card);
 
-            if (currentMode === 'image') generateImage(prompt, width, height, id);
-            else if (currentMode === 'video') generateVideo(prompt, id);
-            else generateAudio(prompt, id);
-            
-            promptInput.value = '';
-        });
-
-        function generateImage(prompt, w, h, id) {
-            const seed = Math.floor(Math.random() * 999999);
-            const url = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=${w}&height=${h}&seed=${seed}&nologo=true`;
-            
-            const img = new Image();
-            img.src = url;
-            img.onload = () => {
-                const container = document.querySelector(`#card-${id} .card-media`);
-                if (container) container.innerHTML = `<img src="${url}" alt="AI Result">`;
-            };
-        }
-
-        function generateVideo(prompt, id) {
-            const url = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=600&height=400&model=turbo&feed=true`;
-            setTimeout(() => {
-                const container = document.querySelector(`#card-${id} .card-media`);
-                if (container) {
-                    container.innerHTML = `
-                        <img src="${url}" alt="Video Preview">
-                        <div style="position:absolute; top:12px; right:12px; background:#a855f7; padding:4px 8px; border-radius:4px; font-size:10px; font-weight:bold;">MOTION PREVIEW</div>
-                    `;
-                }
-            }, 1500);
-        }
-
-        function generateAudio(prompt, id) {
-            const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(prompt)}&tl=en&client=tw-ob`;
-            setTimeout(() => {
-                const container = document.querySelector(`#card-${id} .card-media`);
-                if (container) {
-                    container.innerHTML = `
-                        <div style="text-align:center; width: 100%; padding: 20px;">
-                            <div style="font-size:32px; margin-bottom:10px;">🔊</div>
-                            <audio controls src="${url}"></audio>
-                        </div>
-                    `;
-                }
-            }, 800);
-        }
-
-        document.getElementById('clearBtn').addEventListener('click', () => {
-            if(confirm('Are you sure you want to clear the workspace?')) {
-                galleryGrid.innerHTML = '';
+            if (currentMode === 'image') {
+                const seed = Math.floor(Math.random() * 99999);
+                const url = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=${w}&height=${h}&seed=${seed}&nologo=true`;
+                const img = new Image();
+                img.src = url;
+                img.onload = () => {
+                    const media = document.querySelector(`#card-${id} .card-media`);
+                    if(media) media.innerHTML = `<img src="${url}">`;
+                };
+            } else {
+                setTimeout(() => {
+                    const media = document.querySelector(`#card-${id} .card-media`);
+                    if(media) media.innerHTML = `<div style="color:var(--accent-primary); font-weight:bold;">RESULT READY</div>`;
+                }, 2000);
             }
+            promptInput.value = '';
         });
     </script>
 </body>
